@@ -92,6 +92,17 @@ async def staty(interaction: discord.Interaction) -> None:
         x += f'{us.display_name} Liczba punktow:{y[1]}\n'
     await interaction.response.send_message(f'{x}')
 
+
+@commands.is_owner()
+@bot.tree.command(name=f'override', description=f'dupa')
+async def override(interaction: discord.Interaction, userid, score, stage) -> None:
+    u = tohu.floady(userid)
+    u.stage = stage
+    u.lastscore = score
+    u.submit = True
+    tohu.save(u)
+    await interaction.response.send_message(f'Zapisano wynik :hopium:')
+
 @commands.is_owner()
 @bot.tree.command(name=f'endweek', description=f'konczytydzien (debug)')
 async def endweek(interaction: discord.Interaction) -> None:
