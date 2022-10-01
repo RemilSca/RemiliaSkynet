@@ -97,8 +97,8 @@ async def staty(interaction: discord.Interaction) -> None:
 @bot.tree.command(name=f'override', description=f'dupa')
 async def override(interaction: discord.Interaction, userid:str, score:str, stage:str) -> None:
     u = tohu.floady(userid)
-    u.stage = stage
-    u.lastscore = score
+    u.stage = int(stage)
+    u.lastscore = int(score)
     u.submit = True
     tohu.save(u)
     await interaction.response.send_message(f'Zapisano wynik :hopium:')
