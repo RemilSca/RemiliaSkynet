@@ -95,7 +95,7 @@ async def staty(interaction: discord.Interaction) -> None:
 
 @commands.is_owner()
 @bot.tree.command(name=f'override', description=f'dupa')
-async def override(interaction: discord.Interaction, userid:int, score:int, stage:int) -> None:
+async def override(interaction: discord.Interaction, userid:str, score:str, stage:str) -> None:
     u = tohu.floady(userid)
     u.stage = stage
     u.lastscore = score
