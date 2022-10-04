@@ -47,7 +47,7 @@ async def rejestrw(ctx):
     x = cp.create(str(ctx.author.id))
     await ctx.send(f'{x}')
 
-@bot.command(f'Zgadnij postac musi byc w "" i wielkie litery jak w liscie %postacie')
+@bot.command(help=f'Zgadnij postac musi byc w "" i wielkie litery jak w liscie %postacie')
 async def zgadnij(ctx, message):
     x = cp.verify(message, str(ctx.author.id))
     await ctx.send(f'{x}')
