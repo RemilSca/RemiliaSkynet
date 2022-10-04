@@ -4,7 +4,7 @@ import discord
 from discord.ext import tasks
 import tohu
 import datetime as dt
-
+import czapki as cp
 
 
 
@@ -16,7 +16,10 @@ intents.messages = True
 intents.members = True
 
 from discord.ext import commands
-bot = commands.Bot(command_prefix='%', intents=intents)
+bot = commands.Bot(command_prefix='%', intents=discord.Intents.all())
+
+
+
 
 @bot.event
 async def on_ready():
@@ -26,11 +29,41 @@ async def on_ready():
     bot.tree.copy_global_to(guild=guilg)
     await bot.tree.sync(guild=guilg)
     msg1.start()
+    morde.start()
+
+@commands.is_owner()
+@bot.command()
+async def newword(ctx):
+    x = cp.new()
+    await ctx.send(f'{x}')
+
+@bot.command()
+async def rejestrw(ctx):
+    x = cp.create(str(ctx.author.id))
+    await ctx.send(f'{x}')
+
+@bot.command()
+async def zgadnij(ctx, message):
+    x = cp.verify(message, str(ctx.author.id))
+    await ctx.send(f'{x}')
+
+@bot.command()
+async def statystyki(ctx):
+    x = cp.stats(str(ctx.author.id))
+    await ctx.send(f'{x}')
+@commands.is_owner()
+@bot.command()
+async def resetw(ctx):
+    x = cp.reset()
+    await ctx.send(f'{x}')
 
 
 @bot.event
 async def on_message(ctx):
     await bot.process_commands(ctx)
+    if ctx.author != bot.user:
+        if isinstance(ctx.channel, discord.channel.DMChannel):
+            pass
 
 @bot.tree.command(name=f'ping', description=f'ping kurde')
 async def ping(interaction: discord.Interaction) -> None:
@@ -119,7 +152,7 @@ async def msg1():
 async def before_msg1():
     # loop the whole 7 day (60 sec 60 min 24 hours 7 days)
     for _ in range(60*60*24*7):
-        if dt.datetime.utcnow().strftime("%H:%M UTC %w") == "12:00 UTC 7":
+        if dt.datetime.utcnow().strftime("%H:%M UTC %w") == "10:00 UTC 0":
 
             print('It is time')
             return
@@ -142,6 +175,24 @@ async def endw():
         x = tohu.newweek()
         await c.send(f'Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
 
+
+
+@tasks.loop(hours=24)
+async def morde():
+    await resetw()
+    await newword()
+
+@morde.before_loop
+async def before_morde():
+    # loop the whole 7 day (60 sec 60 min 24 hours 7 days)
+    for _ in range(60*60*24):
+        if dt.datetime.utcnow().strftime("%H:%M") == "10:00":
+
+            print('It is time')
+            return
+
+        # wait some time before another loop. Don't make it more than 60 sec or it will skip
+        await asyncio.sleep(30)
 
 
 
