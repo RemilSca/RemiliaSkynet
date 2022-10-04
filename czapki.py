@@ -125,5 +125,12 @@ def stats(id):
     u = floady(id)
     return f'Zgadles {u.zg} razy, najwieksza seria to {u.highest}'
 
+def chars():
+    czapki, _ = op()
+    c = list(czapki.keys())
+    r = f''
+    for x in c:
+        r += f'{x}\n'
+    return r
 
 

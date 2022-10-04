@@ -37,12 +37,17 @@ async def newword(ctx):
     x = cp.new()
     await ctx.send(f'{x}')
 
-@bot.command()
+@bot.command(help=f'Pokazuje liste postaci')
+async def postacie(ctx):
+    x = cp.chars()
+    await ctx.send(f'{x}')
+
+@bot.command(help=f'Rejestruje konto do minigierki')
 async def rejestrw(ctx):
     x = cp.create(str(ctx.author.id))
     await ctx.send(f'{x}')
 
-@bot.command()
+@bot.command(f'Zgadnij postac musi byc w "" i wielkie litery jak w liscie %postacie')
 async def zgadnij(ctx, message):
     x = cp.verify(message, str(ctx.author.id))
     await ctx.send(f'{x}')
