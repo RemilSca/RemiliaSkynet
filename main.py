@@ -33,9 +33,9 @@ async def on_ready():
 
 @commands.is_owner()
 @bot.command()
-async def newword(ctx):
+async def newword():
     x = cp.new()
-    await ctx.send(f'{x}')
+    print(x)
 
 @bot.command(help=f'Pokazuje liste postaci')
 async def postacie(ctx):
@@ -58,9 +58,9 @@ async def statystyki(ctx):
     await ctx.send(f'{x}')
 @commands.is_owner()
 @bot.command()
-async def resetw(ctx):
+async def resetw():
     x = cp.reset()
-    await ctx.send(f'{x}')
+    print(x)
 
 
 @bot.event
