@@ -107,7 +107,8 @@ def reset():
     for x in files:
         fikle = x.split('.')
         u = floady(fikle[0])
-        u.highest = u.streak
+        if u.highest < u.streak:
+            u.highest = u.streak
         if not u.win:
             u.streak = 0
         u.win = False
