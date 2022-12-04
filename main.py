@@ -134,7 +134,7 @@ async def endw():
         c = await g.fetch_channel(790562786992193548)
         await c.send(f'Weekly danmaku challange wygrał: <@!{wyg}>')
         x = tohu.newweek()
-        await c.send(f'Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
+        await c.send(f'<@&1025049477272309831> Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
     else:
         g = await bot.fetch_guild(647798243207544842)
         c = await g.fetch_channel(790562786992193548)
