@@ -166,23 +166,14 @@ def endweek():
     scores = sta()
     if scores != []:
         files = os.listdir(f'users')
+        use = floady(int(scores[0][0]))
+        highest = use.lastscore
         for x in files:
             fikle = x.split('.')
             us = floady(fikle[0])
-
-            if not us.submit:
-                if us.lp > 0:
-                    us.lp -= 5
-                    us.submit = False
-                    save(us)
-            else:
-                us.lp += 5
-                us.submit = False
-                save(us)
-        us = floady(int(scores[0][0]))
-        us.lp += 5
-        save(us)
-        return us.id
+            us.lp = round(100*(us.lastscore/highest))
+            save(us)
+        return use.id
     return f'Nikt nie wygral'
 
 def staty():
