@@ -66,14 +66,12 @@ def parse(id):
 
                     if week['t'] == '1cc':
                         if week['g'] == 'th06':
-                            if len(score) == 5:
                                 u.stage = len(score)
                                 u.lastscore = score[-1]
                                 u.submit = True
                                 save(u)
                                 ret = f'Zapisano score {u.lastscore} stage: {u.stage}'
                         else:
-                            if repl['stage'] == 'All':
                                 u.stage = len(score)
                                 u.lastscore = score[-1]
                                 u.submit = True
