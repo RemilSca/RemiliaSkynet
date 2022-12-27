@@ -171,7 +171,9 @@ def endweek():
         for x in files:
             fikle = x.split('.')
             us = floady(fikle[0])
-            us.lp = round(100*(us.lastscore/highest))
+            if us.submit == True:
+                us.lp = round(100*(us.lastscore/highest))
+                us.submit = False
             save(us)
         return use.id
     return f'Nikt nie wygral'
