@@ -172,7 +172,7 @@ def endweek():
             fikle = x.split('.')
             us = floady(fikle[0])
             if us.submit == True:
-                us.lp = round(100*(us.lastscore/highest))
+                us.lp += round(100*(us.lastscore/highest))
                 us.submit = False
             save(us)
         return use.id
