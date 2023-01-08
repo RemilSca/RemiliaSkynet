@@ -35,11 +35,10 @@ def create(id):
     u = Thser(id)
     save(u)
     return f'Twój klucz to {u.akey}'
+
 def parse(id):
     try:
         u = floady(id)
-
-
         h = open(f'replays/{id}.rpy', 'rb')
         data = h.read()
         game = str(data[0:3])[2:5]
@@ -56,53 +55,42 @@ def parse(id):
         else:
             if game[1:2] in week['g']:
                 check = True
-        ret = f'Niepoprawny plik replay/Nie spelnione warunki zadania'
-        if check and tr.getPlayer() == u.akey:
-            repl = tr.getBaseInfoDic()
-            score = tr.getStageScore()
-            character = repl['character'] + repl['shottype']
-            if week['m'] == repl['rank'].lower():
-                if character == week['c']:
 
-                    if week['t'] == '1cc':
-                        if week['g'] == 'th06':
-                                u.stage = len(score)
-                                u.lastscore = score[-1]
-                                u.submit = True
-                                save(u)
-                                ret = f'Zapisano score {u.lastscore} stage: {u.stage}'
-                        else:
-                                u.stage = len(score)
-                                u.lastscore = score[-1]
-                                u.submit = True
-                                save(u)
-                                ret = f'Zapisano score {u.lastscore} stage: {u.stage}'
+        nope_msg = 'Replay nie przyjety:'
 
-                    elif week['t'] == 'nobomb' and tr.getX() == []:
-                        u.stage = len(score)
-                        u.lastscore = score[-1]
-                        u.submit = True
-                        save(u)
-                        ret = f'Zapisano score {u.lastscore} stage: {u.stage}'
+        if not check:
+            return f'{nope_msg} Nie ta gra'
 
-                    elif week['t'] == 'noshoot' and tr.getZ() == []:
-                        u.stage = len(score)
-                        u.lastscore = score[-1]
-                        u.submit = True
-                        save(u)
-                        ret = f'Zapisano score {u.lastscore} stage: {u.stage}'
+        if tr.getPlayer() != u.akey:
+            return f'{nope_msg} Nieprawidlowa nazwa gracza'
 
-                    elif week['t'] == 'nofocus' and tr.getShift() == []:
-                        u.stage = len(score)
-                        u.lastscore = score[-1]
-                        u.submit = True
-                        save(u)
-                        ret = f'Zapisano score {u.lastscore} stage: {u.stage}'
-            save(u)
-        return ret
-    except:
-        return f'Dupa totalna'
+        repl = tr.getBaseInfoDic()
+        score = tr.getStageScore()
+        character = repl['character'] + repl['shottype']
 
+        if week['m'] != repl['rank'].lower():
+            return f'{nope_msg} Nie ten poziom trudnosci'
+
+        if character != week['c']:
+            return f'{nope_msg} Nie ta postac'
+
+        if week['t'] == 'nobomb' and tr.getX() != []:
+            return f'{nope_msg} Wcisnieto X'
+
+        if week['t'] == 'noshoot' and tr.getZ() != []:
+            return f'{nope_msg} Wcisnieto Z'
+
+        if week['t'] == 'nofocus' and tr.getShift() != []:
+            return f'{nope_msg} Wcisnieto Shift'
+
+        u.stage = len(score)
+        u.lastscore = score[-1]
+        u.submit = True
+        save(u)
+        return f'Zapisano score {u.lastscore} stage: {u.stage}'
+
+    except Exception as err:
+        return f'Dupa totalna: {err}'
 
 
 def newweek():
