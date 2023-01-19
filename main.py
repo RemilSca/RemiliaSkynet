@@ -133,7 +133,8 @@ async def staty(interaction: discord.Interaction) -> None:
     x = f''
     for y in scores:
         us = bot.get_user(int(y[0]))
-        x += f'{us.display_name} Liczba punktow:{y[1]}\n'
+        if us:
+            x += f'{us.display_name} Liczba punktow:{y[1]}\n'
     await interaction.response.send_message(f'{x}')
 
 
