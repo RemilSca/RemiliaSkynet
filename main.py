@@ -1,4 +1,5 @@
 
+import os.path
 import asyncio
 import discord
 from discord.ext import tasks
@@ -90,6 +91,7 @@ async def upload(interaction: discord.Interaction) -> None:
 
 
     if str(message.attachments) == "[]":  # Checks if there is an attachment on the message
+        await interaction.response.send_message(f'Nie wysłałeś żadnego replayu', ephemeral=True)
         return
     else:  # If there is it gets the filename from message.attachments
         split_v1 = str(message.attachments).split("filename='")[1]
@@ -99,7 +101,7 @@ async def upload(interaction: discord.Interaction) -> None:
             x = tohu.parse(interaction.user.id)
             await interaction.response.send_message(f'{x}')
         else:
-            await interaction.response.send_message(f'To nie jest plik replayu')
+            await interaction.response.send_message(f'To nie jest plik replayu', ephemeral=True)
 
 @bot.tree.command(name=f'weekstats', description=f'Pokazuje statystyki tego tygodnia')
 async def weekstats(interaction: discord.Interaction) -> None:
@@ -116,16 +118,19 @@ async def weekstats(interaction: discord.Interaction) -> None:
 @bot.tree.command(name=f'getkey', description=f'Pokazuje klucz którym masz podpisać replay')
 async def getkey(interaction: discord.Interaction) -> None:
     id = interaction.user.id
-    u = tohu.floady(id)
-    klucz = u.akey
-    x = f'Twój klucz to {klucz}'
-    await interaction.response.send_message(f'{x}')
+    if os.path.isfile(f'users/{id}.plik'):
+        u = tohu.floady(id)
+        klucz = u.akey
+        x = f'Twój klucz to {klucz}'
+        await interaction.response.send_message(f'{x}', ephemeral=True)
+    else:
+        await interaction.response.send_message(f'Nie jesteś zarejestrowany!', ephemeral=True)
 
 @bot.tree.command(name=f'register', description=f'Rejestruje konto do weekly challangu')
 async def register(interaction: discord.Interaction) -> None:
     id = interaction.user.id
     x = tohu.create(id)
-    await interaction.response.send_message(f'{x}')
+    await interaction.response.send_message(f'{x}', ephemeral=True)
 
 @bot.tree.command(name=f'staty', description=f'Pokazuje statystyki')
 async def staty(interaction: discord.Interaction) -> None:
