@@ -26,7 +26,7 @@ bot = commands.Bot(command_prefix='%', intents=discord.Intents.all())
 async def on_ready():
     print('Online')
 
-    guilg = await bot.fetch_guild(647798243207544842)
+    guilg = await bot.fetch_guild(1109843864044441602)
     bot.tree.copy_global_to(guild=guilg)
     await bot.tree.sync(guild=guilg)
     msg1.start()
@@ -180,17 +180,17 @@ async def endw():
 
     wyg = (tohu.endweek())
     if type(wyg) is type(0):
-        g = await bot.fetch_guild(647798243207544842)
-        c = await g.fetch_channel(790562786992193548)
+        g = await bot.fetch_guild(1109843864044441602)
+        c = await g.fetch_channel(1141384111500570644)
         await c.send(f'Weekly danmaku challange wygrał: <@!{wyg}>')
         x = tohu.newweek()
-        await c.send(f'<@&1025049477272309831> Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
+        await c.send(f'<@&1141384185018335262> Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
     else:
-        g = await bot.fetch_guild(647798243207544842)
-        c = await g.fetch_channel(790562786992193548)
+        g = await bot.fetch_guild(1109843864044441602)
+        c = await g.fetch_channel(1141384111500570644)
         await c.send(f'Weekly danmaku challange wygrał: Nikt!')
         x = tohu.newweek()
-        await c.send(f'Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
+        await c.send(f'<@&1141384185018335262> Nowy weekly challange to: {x["g"]} {x["t"]} {x["m"]} {x["c"]}')
 
 
 
